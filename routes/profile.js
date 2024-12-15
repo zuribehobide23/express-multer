@@ -3,11 +3,12 @@ var router = express.Router();
 const multer  = require('multer')
 const fs = require('fs');
 const path = require('path');
+const PORT = process.env.PORT || 3000;
 
 const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
-}
+};
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -17,7 +18,7 @@ const storage = multer.diskStorage({
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
     }
-  })
+});
   
 const upload = multer({ 
   storage: storage,
@@ -43,9 +44,12 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
   const file = req.file
   const izena = req.body.izena;
     
-  console.log(`Zure izena: ${izena}. Fitxategia: ${file.path}`)
-    
-  res.send("Jasota");
-})
+  res.json({
+    message: "Jasota",
+    user: izena,
+    filePath: `Zure izena: ${izena}. Fitxategia: http://localhost:${PORT}/uploads/${file.filename}`,  
+    fileName: file.filename
+  });
+});
 
 module.exports = router;

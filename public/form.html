@@ -5,12 +5,33 @@
     <title>Title</title>       
 </head>
 <body>
-<form action="/profile" method="post" enctype="multipart/form-data">
-    <label for="izena">Izena:</label>
-    <input type="text" id="izena" name="izena" placeholder="Sartu zure izena" required>
-    <br>
-    <input type="file" name="avatar"/>
-    <input type="submit">
-</form>
+    <form id="form" action="/profile" method="post" enctype="multipart/form-data">
+        <label for="izena">Izena:</label>
+        <input type="text" id="izena" name="izena" placeholder="Sartu zure izena" required>
+        <br>
+        <input type="file" name="avatar" required/>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        const form = document.getElementById('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(form);
+            
+            fetch('/profile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.filePath);              
+            })
+            .catch(error => {
+                console.error('Errorea:', error);
+            });
+        });
+    </script>
 </body>
 </html>
