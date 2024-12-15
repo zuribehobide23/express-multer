@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const multer  = require('multer')
-//const upload = multer({ dest: 'uploads/' })
-
+const upload = multer({ dest: 'uploads/' })
+/*
 const storage = multer.diskStorage({
     dest: function (req, file, cb) {
       cb(null, 'uploads/')
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   })
   
 const upload = multer({ storage: storage })
-
+*/
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.redirect('form.html');
