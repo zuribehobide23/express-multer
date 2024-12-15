@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.fieldname + '-' + uniqueSuffix + ".png")
     }
   })
   
@@ -37,7 +37,7 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
     const file = req.file
     const izena = req.body.izena;
     
-    console.log(`Zure izena: ${izena}. Fitxategia: https://miniature-chainsaw-69965xxq4vj6c55xj.github.dev/${file.path}`)
+    console.log(`Zure izena: ${izena}. Fitxategia: ${file.path}`)
     
     res.send("Jasota")
 })
