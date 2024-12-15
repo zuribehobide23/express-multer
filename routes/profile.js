@@ -34,9 +34,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', upload.single('avatar'), function (req, res, next) {
-    console.log(req.file)
+    const file = req.file
     const izena = req.body.izena;
-    res.send(`Eskerrik asko ${izena}! Zure irudia jaso izan da.`)
+    
+    console.log(`Zure izena: ${izena}. Fitxategia: https://miniature-chainsaw-69965xxq4vj6c55xj.github.dev/${file.path}`)
+    
+    res.send("Jasota")
 })
 
 module.exports = router;
