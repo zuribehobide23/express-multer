@@ -13,7 +13,20 @@ const storage = multer.diskStorage({
     }
   })
   
-const upload = multer({ storage: storage })
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 }, 
+  fileFilter: function (req, file, cb) {
+    const filetypes = /png|jpg/; 
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Soilik PNG eta JPG fitxategiak onartzen dira'));
+    }
+  }
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -22,9 +35,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/', upload.single('avatar'), function (req, res, next) {
     console.log(req.file)
-    // req.body will hold the text fields, if there were any
-    res.send("Jasota")
+    const izena = req.body.izena;
+    res.send(`Eskerrik asko ${izena}! Zure irudia jaso izan da.`)
 })
-
 
 module.exports = router;
