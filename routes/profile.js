@@ -46,10 +46,13 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
   let url;
   if (process.env.CODESPACE_NAME) {
     url = `https://${process.env.CODESPACE_NAME}.github.dev/${file.path}`;
+
+    //Codespace-tik irudia lortzeko
+    console.log(file.path)
   } else {
     url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
   }
-  
+
   res.json({
     message: "Jasota",
     filePath: `Zure izena: ${izena}. Fitxategia: ${url}`,  
