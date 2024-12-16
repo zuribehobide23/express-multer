@@ -51,9 +51,7 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
   }
   res.json({
     message: "Jasota",
-    user: izena,
     filePath: `Zure izena: ${izena}. Fitxategia: ${url}`,  
-    fileName: file.filename
   });
 });
 
