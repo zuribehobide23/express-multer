@@ -3,7 +3,6 @@ var router = express.Router();
 const multer  = require('multer')
 const fs = require('fs');
 const path = require('path');
-const PORT = process.env.PORT || 3000;
 
 const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -43,11 +42,17 @@ router.get('/', function(req, res, next) {
 router.post('/', upload.single('avatar'), function (req, res, next) {
   const file = req.file
   const izena = req.body.izena;
-    
+   
+  let url;
+  if (process.env.CODESPACE_NAME) {
+    url = `https://${process.env.CODESPACE_NAME}.github.dev/${file.path}`;
+  } else {
+    url = `${req.protocol}://${req.get('host')}${file.filename}`;
+  }
   res.json({
     message: "Jasota",
     user: izena,
-    filePath: `Zure izena: ${izena}. Fitxategia: http://localhost:${PORT}/uploads/${file.filename}`,  
+    filePath: `Zure izena: ${izena}. Fitxategia: ${url}`,  
     fileName: file.filename
   });
 });
