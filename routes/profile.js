@@ -47,7 +47,7 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
   if (process.env.CODESPACE_NAME) {
     url = `https://${process.env.CODESPACE_NAME}.github.dev/${file.path}`;
   } else {
-    url = `${req.protocol}://${req.get('host')}${file.filename}`;
+    url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
   }
   res.json({
     message: "Jasota",
