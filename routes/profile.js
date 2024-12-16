@@ -49,6 +49,7 @@ router.post('/', upload.single('avatar'), function (req, res, next) {
   } else {
     url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
   }
+  
   res.json({
     message: "Jasota",
     filePath: `Zure izena: ${izena}. Fitxategia: ${url}`,  
